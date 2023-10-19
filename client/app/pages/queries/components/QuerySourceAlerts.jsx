@@ -28,6 +28,19 @@ export default function QuerySourceAlerts({ query, dataSourcesAvailable }) {
         </p>
       </React.Fragment>
     );
+  } else if (!queryFlags.canViewSource) {
+      message = (
+        <React.Fragment>
+          <Typography.Title level={4}>
+            You don't have permission to view the source of this query.
+          </Typography.Title>
+          <p>
+            <Typography.Text type="secondary">
+              You can only <Link href="queries">browse existing queries</Link> and view some generic info about them.
+            </Typography.Text>
+          </p>
+        </React.Fragment>
+    );
   } else if (!dataSourcesAvailable) {
     if (currentUser.isAdmin) {
       message = (

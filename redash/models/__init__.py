@@ -152,7 +152,7 @@ class DataSource(BelongsToOrgMixin, db.Model):
     def create_with_group(cls, *args, **kwargs):
         data_source = cls(*args, **kwargs)
         data_source_group = DataSourceGroup(
-            data_source=data_source, group=data_source.org.default_group
+            data_source=data_source, group=data_source.org.admin_group
         )
         db.session.add_all([data_source, data_source_group])
         return data_source
@@ -1120,7 +1120,7 @@ class Dashboard(ChangeTrackingMixin, TimestampMixin, BelongsToOrgMixin, db.Model
                 joinedload(Dashboard.user).load_only(
                     "id", "name", "_profile_image_url", "email"
                 )
-            ).distinct(Dashboard.created_at, Dashboard.slug)
+            ).distinct(cls.lowercase_name, Dashboard.created_at, Dashboard.slug)
             .outerjoin(Widget)
             .outerjoin(Visualization)
             .outerjoin(Query)
@@ -1499,7 +1499,7 @@ def init_db():
     default_org = Organization(name="Default", slug="default", settings={})
     admin_group = Group(
         name="admin",
-        permissions=["admin", "super_admin"],
+        permissions=["admin", "super_admin", "create_dashboard", "create_query", "edit_dashboard", "edit_query", "view_source", "execute_query", "list_users"],
         org=default_org,
         type=Group.BUILTIN_GROUP,
     )

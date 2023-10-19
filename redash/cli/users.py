@@ -163,7 +163,7 @@ def create_root(email, name, google_auth=False, password=None, organization="def
 
     admin_group = models.Group(
         name="admin",
-        permissions=["admin", "super_admin"],
+        permissions=["admin", "super_admin", "create_dashboard", "create_query", "edit_dashboard", "edit_query", "view_source", "execute_query", "list_users"],
         org=org,
         type=models.Group.BUILTIN_GROUP,
     )

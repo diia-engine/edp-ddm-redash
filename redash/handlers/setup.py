@@ -23,7 +23,7 @@ def create_org(org_name, user_name, email, password):
     default_org = Organization(name=org_name, slug="default", settings={})
     admin_group = Group(
         name="admin",
-        permissions=["admin", "super_admin"],
+        permissions=["admin", "super_admin", "create_dashboard", "create_query", "edit_dashboard", "edit_query", "view_source", "execute_query", "list_users"],
         org=default_org,
         type=Group.BUILTIN_GROUP,
     )
